@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<center>
+    <form method = "POST" action = "{{url_for('hello')}}">
+        <button name = "back button" type = "submit">
+            Back
+        </button>
+
+    </form>
+    <image src = {{url_for('download', filename = filename)}} style="width:800px;height:500px;"></image>
+</center>
+
+
+</body>
+</html>

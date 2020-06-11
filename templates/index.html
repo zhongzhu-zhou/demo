@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Crowdoing Crypto Currency Index</title>
+    <style>
+        .tabs .tab{
+      float: left;
+      display: block;
+      }
+        .tabs .tab>input{
+        position = "absolute"
+        }
+        .tabs .tab>label {
+      display: block;
+      padding: 6px 21px;
+      font-size: 12px;
+      text-transform: uppercase;
+      cursor: pointer;
+      position: relative;
+      color: #FFF;
+      background: 	#228B22;
+      }
+
+    </style>
+</head>
+<body>
+<h1>Welcome </h1>
+<ul class = "tabs">
+    <li class = "tab">
+        <label for="tab1">Historical Data</label>
+        <div id = "tab1-content">
+            <form method = "POST" action = "{{url_for('visualization')}}">
+                <label>please select an index</label>
+                <select name = "industry">
+                    <option>Anti Poverty Index</option>
+                    <option>Sustainability Index</option>
+                    <option>Supply Chain Index</option>
+                    <option>Art and Media Index</option>
+                    <option>Technology Index</option>
+                </select>
+                <label>please select a metric</label>
+                <select name = "metrics">
+                    <option>market_caps</option>
+                    <option>total_volumes</option>
+                    <option>prices</option>
+                </select>
+                <br>
+                <button name = "Generate png" type = "submit">Submit</button>
+            </form>
+        </div>
+    </li>
+    <li class = "tab">
+        <label for = "tab2">Latest Update: {{time}}</label>
+        <div id = "tab2-content">
+            <table>
+                <tr>
+                    <th>Index</th>
+                    <th>Market Cap</th>
+                    <th>Current Price</th>
+                    <th>High 24</th>
+                    <th>Low 24h</th>
+                    <th>Total Volume</th>
+                    <th>Market Cap Change Percentage 24h</th>
+
+                </tr>
+                <tr>
+                    <td>Anti Poverty Index</td>
+                    <td>{{data['Anti Poverty Index']['market_cap']}}</td>
+                    <td>{{data['Anti Poverty Index']['current_price']}}</td>
+                    <td>{{data['Anti Poverty Index']['high_24h']}}</td>
+                    <td>{{data['Anti Poverty Index']['low_24h']}}</td>
+                    <td>{{data['Anti Poverty Index']['total_volume']}}</td>
+                    <td>{{data['Anti Poverty Index']['market_cap_change_percentage_24h']}}</td>
+                </tr>
+                <tr>
+                    <td>Sustainability Index</td>
+                    <td>{{data['Sustainability Index']['market_cap']}}</td>
+                    <td>{{data['Sustainability Index']['current_price']}}</td>
+                    <td>{{data['Sustainability Index']['high_24h']}}</td>
+                    <td>{{data['Sustainability Index']['low_24h']}}</td>
+                    <td>{{data['Sustainability Index']['total_volume']}}</td>
+                    <td>{{data['Sustainability Index']['market_cap_change_percentage_24h']}}</td>
+                </tr>
+                <tr>
+                    <td>Art and Media Index</td>
+                    <td>{{data['Art and Media Index']['market_cap']}}</td>
+                    <td>{{data['Art and Media Index']['current_price']}}</td>
+                    <td>{{data['Art and Media Index']['high_24h']}}</td>
+                    <td>{{data['Art and Media Index']['low_24h']}}</td>
+                    <td>{{data['Art and Media Index']['total_volume']}}</td>
+                    <td>{{data['Art and Media Index']['market_cap_change_percentage_24h']}}</td>
+                </tr>
+                <tr>
+                    <td>Technology Index</td>
+                    <td>{{data['Technology Index']['market_cap']}}</td>
+                    <td>{{data['Technology Index']['current_price']}}</td>
+                    <td>{{data['Technology Index']['high_24h']}}</td>
+                    <td>{{data['Technology Index']['low_24h']}}</td>
+                    <td>{{data['Technology Index']['total_volume']}}</td>
+                    <td>{{data['Technology Index']['market_cap_change_percentage_24h']}}</td>
+                </tr>
+                <tr>
+                    <td>Supply Chain Index</td>
+                    <td>{{data['Supply Chain Index']['market_cap']}}</td>
+                    <td>{{data['Supply Chain Index']['current_price']}}</td>
+                    <td>{{data['Supply Chain Index']['high_24h']}}</td>
+                    <td>{{data['Supply Chain Index']['low_24h']}}</td>
+                    <td>{{data['Supply Chain Index']['total_volume']}}</td>
+                    <td>{{data['Supply Chain Index']['market_cap_change_percentage_24h']}}</td>
+                </tr>
+
+
+            </table>
+
+        </div>
+
+    </li>
+</ul>
+
+
+
+</body>
+</html>
