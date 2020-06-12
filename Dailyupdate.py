@@ -5,7 +5,7 @@ from github import Github
 import requests as re
 
 def daily_update():
-    df_tokens = pd.read_csv("https://raw.githubusercontent.com/zhongzhu-zhou/demo/master/index_coingecko.csv")
+    df_tokens = pd.read_csv("https://raw.githubusercontent.com/zhongzhu-zhou/demo/master/data/index_coingecko.csv")
     tokenlist = list(df_tokens["Name"])
     c_api = CoinGeckoAPI()
     dt0 = datetime.utcnow()
@@ -31,7 +31,7 @@ def daily_update():
     set_time = dt0.strftime('%Y-%m-%d')
     df_section["time"] = pd.to_datetime(set_time)
     df_section = df_section.reindex(columns=["time", "token", "market_caps", "prices", "total_volumes"])
-    df_all = pd.read_csv("https://raw.githubusercontent.com/zhongzhu-zhou/demo/master/historical.csv",parse_dates=["time"])
+    df_all = pd.read_csv("https://raw.githubusercontent.com/zhongzhu-zhou/demo/master/data/historical.csv",parse_dates=["time"])
     if df_all.loc[df_all["time"] == df_section["time"].head(1).values[0]].empty:
         df_section.to_csv("data/historical.csv", mode="a",
                           header=False)
@@ -43,11 +43,18 @@ def daily_update():
         url2 = "https://api.github.com/repos/zhongzhu-zhou/demo/git/trees/" + head_tree_sha
         page2 = re.get(url2)
         for each in page2.json()["tree"]:
+            if each["path"] == "data":
+                sha = each["sha"]
+                break
+        url3 = "https://api.github.com/repos/zhongzhu-zhou/demo/git/trees/" + sha
+        page3 = re.get(url3)
+
+        for each in page3.json()["tree"]:
             if each["path"] == "historical.csv":
                 sha = each["sha"]
                 break
         data = open("data/historical.csv", "rb").read()
-        repo.update_file(path="historical.csv", message="daily commit", content=data, sha=sha)
+        repo.update_file(path="data/historical.csv", message="daily commit", content=data, sha=sha)
 
 if __name__ == "__main__":
     daily_update()
