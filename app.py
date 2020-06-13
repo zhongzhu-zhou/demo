@@ -8,11 +8,11 @@ import os
 app = Flask("__name__")
 
 def check_update():
-    if 2 < int(datetime.datetime.utcnow().strftime("%H")) < 13:
+    if 2 < int(datetime.datetime.utcnow().strftime("%H")) < 22:
         daily_update()
 app.config["CLIENT_IMAGES"] = os.getcwd()+"/download/"
 scheduler = BackgroundScheduler()
-scheduler.add_job(func = check_update,trigger="interval", hours = 8)
+scheduler.add_job(func = check_update,trigger="interval", hours = 1)
 scheduler.start()
 
 
