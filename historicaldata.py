@@ -3,6 +3,7 @@ from datetime import datetime
 import pandas as pd
 import time
 
+# Generate the initial historical.csv file. Only need to be run once
 if __name__ == "__main__":
     c_api = CoinGeckoAPI()
     dt = datetime.now()

@@ -1,10 +1,13 @@
 from CoinGeckoAPI import CoinGeckoAPI
 import pandas as pd
+
+#Calculate index price level by averaging different token's price.
 def mean_of_list(list):
     list = [0 if x is None else x for x in list]
     return round(float(sum(list))/float(len(list)),3)
 
 
+#Get the lastest price, 24h_trading volume, 24h_price change, market_cap from CoingeckoAPI
 def get_current_data():
     df0 = pd.read_csv("data/index_coingecko.csv")
     set1 = set(df0["Index"])
@@ -38,15 +41,6 @@ def get_current_data():
     return final_data
 
 
-
-    #     elements_list = ["current_price", "total_volume", "high_24h", "low_24h", "price_change_24h"]
-    #     data_list = []
-    #     for each in elements_list:
-    #         data_list.
-    #
-    #     all_list.append(data_list)
-    #     print(token)
-    # print(all_list)
 
 
 if __name__ == "__main__":

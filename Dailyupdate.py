@@ -4,7 +4,11 @@ import pandas as pd
 from github import Github
 import requests as re
 
+
+#Update the historical.csv on github repo.
 def daily_update():
+
+#Get token list from github repo
     df_tokens = pd.read_csv("https://raw.githubusercontent.com/zhongzhu-zhou/demo/master/data/index_coingecko.csv")
     tokenlist = list(df_tokens["Name"])
     c_api = CoinGeckoAPI()
@@ -31,7 +35,11 @@ def daily_update():
     set_time = dt0.strftime('%Y-%m-%d')
     df_section["time"] = pd.to_datetime(set_time)
     df_section = df_section.reindex(columns=["time", "token", "market_caps", "prices", "total_volumes"])
+
+# Get the current historical.csv file from github.
     df_all = pd.read_csv("https://raw.githubusercontent.com/zhongzhu-zhou/demo/master/data/historical.csv",parse_dates=["time"])
+
+# If the current historical.csv already contains the record of today, we don't need to append data any more.
     if df_all.loc[df_all["time"] == df_section["time"].head(1).values[0]].empty:
         df_section.to_csv("data/historical.csv", mode="a",
                           header=False)

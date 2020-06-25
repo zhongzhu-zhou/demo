@@ -18,6 +18,8 @@ class CoinGeckoAPI:
         retries = Retry(total=5, backoff_factor=0.5, status_forcelist=[502, 503, 504])
         self.session.mount('http://', HTTPAdapter(max_retries=retries))
 
+
+# private method that allows other public mathods to get content from CoinGecko
     def __request(self, url):
         # print(url)
         try:
@@ -36,6 +38,9 @@ class CoinGeckoAPI:
             # except UnboundLocalError as e:
             #    pass
             raise
+            
+
+#Private methods passing parameters to url endpoints
     def __api_url_params(self, api_url, params):
         if params:
             api_url += '?'
@@ -45,8 +50,10 @@ class CoinGeckoAPI:
         return api_url
 
 
+
+#Get historical data (name, price, market, stats) at a given date for a coin
     def get_coin_history_by_id(self, id, date, **kwargs):
-        """Get historical data (name, price, market, stats) at a given date for a coin"""
+
 
         kwargs['date'] = date
 
@@ -55,12 +62,15 @@ class CoinGeckoAPI:
 
         return self.__request(api_url)
 
+
+#Get all coins' latest info
     def get_coin_list(self):
         api_url = self.api_base_url+"coins/list"
         return self.__request(api_url)
 
+
+#Get historical market data include price, market cap, and 24h volume within a range of timestamp (granularity auto)
     def get_coin_market_chart_range_by_id(self, id, vs_currency, from_timestamp, to_timestamp):
-        """Get historical market data include price, market cap, and 24h volume within a range of timestamp (granularity auto)"""
 
         api_url = '{0}coins/{1}/market_chart/range?vs_currency={2}&from={3}&to={4}'.format(self.api_base_url, id,
                                                                                            vs_currency, from_timestamp,
@@ -68,25 +78,21 @@ class CoinGeckoAPI:
 
         return self.__request(api_url)
 
+
+#Get a specific token's current data, including its latest price, market_caps, and price change.
     def get_coin_current_data(self,id):
         api_url = self.api_base_url+"coins/"+id
         return self.__request(api_url)
 
+
+#Get a specific token's current data, including its latest price, market_caps, and price change. All values will be in the currency specified.
     def get_coin_market_data(self,currency,ids):
         api_url = self.api_base_url + "coins/markets?"+"vs_currency="+currency+"&ids="
         api_url += "%2C".join(ids)
         api_url += "&order=market_cap_desc&per_page=100&page=1&sparkline=false&price_change_percentage=24"
         return self.__request(api_url)
 
-# if __name__ == "__main__":
-#     # print(datetime.utcfromtimestamp(1586650140.880).strftime('%Y-%m-%d %H:%M:%S'))
-#     c_api = CoinGeckoAPI()
-#     result = c_api.get_coin_market_chart_range_by_id("bitcoin","usd",1586649600,1591401600)
-#     for key, value in result.items():
-#        # if key = 'market_caps':
-#         for each in value:
-#             newtime = datetime.utcfromtimestamp(each[0]*0.001).strftime('%Y-%m-%d %H:%M:%S')
-#             print(key,newtime,each[1])
+
 
 
 

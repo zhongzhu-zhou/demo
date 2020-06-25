@@ -5,7 +5,7 @@ pd.set_option("display.width",1000)
 pd.set_option("display.max_column",10000)
 
 
-
+#Generate historical data visulization. The method doesn't return anything but will generate a png file in download folder.
 def displayvisulization(industry,metrics):
     df_tokens = pd.read_csv("data/index_coingecko.csv")
     df_tokens = df_tokens.rename(columns={"Name": "token"})
