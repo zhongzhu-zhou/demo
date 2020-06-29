@@ -1,124 +1,137 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
     <title>Crowdoing Crypto Currency Index</title>
-    <style>
-        .tabs .tab{
-      float: left;
-      display: block;
-      }
-        .tabs .tab>input{
-        position = "absolute"
-        }
-        .tabs .tab>label {
-      display: block;
-      padding: 6px 21px;
-      font-size: 12px;
-      text-transform: uppercase;
-      cursor: pointer;
-      position: relative;
-      color: #FFF;
-      background: 	#228B22;
-      }
 
-    </style>
+    <!-- Custom styles -->
+    <link href="styles.css" rel="stylesheet">
 </head>
+
 <body>
-<h1>Welcome </h1>
-<ul class = "tabs">
-    <li class = "tab">
-        <label for="tab1">Historical Data</label>
-        <div id = "tab1-content">
-            <form method = "POST" action = "{{url_for('visualization')}}">
-                <label>please select an index</label>
-                <select name = "industry">
-                    <option>Anti Poverty Index</option>
-                    <option>Sustainability Index</option>
-                    <option>Supply Chain Index</option>
-                    <option>Art and Media Index</option>
-                    <option>Technology Index</option>
-                </select>
-                <label>please select a metric</label>
-                <select name = "metrics">
-                    <option>market_caps</option>
-                    <option>total_volumes</option>
-                    <option>prices</option>
-                </select>
-                <br>
-                <button name = "Generate png" type = "submit">Submit</button>
-            </form>
-        </div>
-    </li>
-    <li class = "tab">
-        <label for = "tab2">Latest Update: {{time}}</label>
-        <div id = "tab2-content">
-            <table>
-                <tr>
-                    <th>Index</th>
-                    <th>Market Cap</th>
-                    <th>Current Price</th>
-                    <th>High 24</th>
-                    <th>Low 24h</th>
-                    <th>Total Volume</th>
-                    <th>Market Cap Change Percentage 24h</th>
+    <main role="main" class="container maincontainer">
 
-                </tr>
-                <tr>
-                    <td>Anti Poverty Index</td>
-                    <td>{{data['Anti Poverty Index']['market_cap']}}</td>
-                    <td>{{data['Anti Poverty Index']['current_price']}}</td>
-                    <td>{{data['Anti Poverty Index']['high_24h']}}</td>
-                    <td>{{data['Anti Poverty Index']['low_24h']}}</td>
-                    <td>{{data['Anti Poverty Index']['total_volume']}}</td>
-                    <td>{{data['Anti Poverty Index']['market_cap_change_percentage_24h']}}</td>
-                </tr>
-                <tr>
-                    <td>Sustainability Index</td>
-                    <td>{{data['Sustainability Index']['market_cap']}}</td>
-                    <td>{{data['Sustainability Index']['current_price']}}</td>
-                    <td>{{data['Sustainability Index']['high_24h']}}</td>
-                    <td>{{data['Sustainability Index']['low_24h']}}</td>
-                    <td>{{data['Sustainability Index']['total_volume']}}</td>
-                    <td>{{data['Sustainability Index']['market_cap_change_percentage_24h']}}</td>
-                </tr>
-                <tr>
-                    <td>Art and Media Index</td>
-                    <td>{{data['Art and Media Index']['market_cap']}}</td>
-                    <td>{{data['Art and Media Index']['current_price']}}</td>
-                    <td>{{data['Art and Media Index']['high_24h']}}</td>
-                    <td>{{data['Art and Media Index']['low_24h']}}</td>
-                    <td>{{data['Art and Media Index']['total_volume']}}</td>
-                    <td>{{data['Art and Media Index']['market_cap_change_percentage_24h']}}</td>
-                </tr>
-                <tr>
-                    <td>Technology Index</td>
-                    <td>{{data['Technology Index']['market_cap']}}</td>
-                    <td>{{data['Technology Index']['current_price']}}</td>
-                    <td>{{data['Technology Index']['high_24h']}}</td>
-                    <td>{{data['Technology Index']['low_24h']}}</td>
-                    <td>{{data['Technology Index']['total_volume']}}</td>
-                    <td>{{data['Technology Index']['market_cap_change_percentage_24h']}}</td>
-                </tr>
-                <tr>
-                    <td>Supply Chain Index</td>
-                    <td>{{data['Supply Chain Index']['market_cap']}}</td>
-                    <td>{{data['Supply Chain Index']['current_price']}}</td>
-                    <td>{{data['Supply Chain Index']['high_24h']}}</td>
-                    <td>{{data['Supply Chain Index']['low_24h']}}</td>
-                    <td>{{data['Supply Chain Index']['total_volume']}}</td>
-                    <td>{{data['Supply Chain Index']['market_cap_change_percentage_24h']}}</td>
-                </tr>
-
-
-            </table>
-
+        <div class="heading">
+            <h1>Crowdoing Crypto Currency Index</h1>
         </div>
 
-    </li>
-</ul>
+        <div class="card text-center">
+            <div class="card-header">
+                <ul class="nav nav-tabs card-header-tabs justify-content-center nav-fill" id="data-list">
+                    <li class="nav-item">
+                        <a class="nav-link active" data-toggle="tab" href="#latestdata">Latest Data</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#historicaldata">Historical Data</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="tab-content card-body scroll">
+                <div id="latestdata" class="tab-pane active">
+                    <table class="table">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th scope="col">Index</th>
+                                <th scope="col">Market Cap</th>
+                                <th scope="col">Current Price</th>
+                                <th scope="col">High 24</th>
+                                <th scope="col">Low 24h</th>
+                                <th scope="col">Total Volume</th>
+                                <th scope="col">Market Cap Change Percentage 24h</th>
 
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">Anti Poverty Index</th>
+                                <td>{{data['Anti Poverty Index']['market_cap']}}</td>
+                                <td>{{data['Anti Poverty Index']['current_price']}}</td>
+                                <td>{{data['Anti Poverty Index']['high_24h']}}</td>
+                                <td>{{data['Anti Poverty Index']['low_24h']}}</td>
+                                <td>{{data['Anti Poverty Index']['total_volume']}}</td>
+                                <td>{{data['Anti Poverty Index']['market_cap_change_percentage_24h']}}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Sustainability Index</th>
+                                <td>{{data['Sustainability Index']['market_cap']}}</td>
+                                <td>{{data['Sustainability Index']['current_price']}}</td>
+                                <td>{{data['Sustainability Index']['high_24h']}}</td>
+                                <td>{{data['Sustainability Index']['low_24h']}}</td>
+                                <td>{{data['Sustainability Index']['total_volume']}}</td>
+                                <td>{{data['Sustainability Index']['market_cap_change_percentage_24h']}}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Art and Media Index</th>
+                                <td>{{data['Art and Media Index']['market_cap']}}</td>
+                                <td>{{data['Art and Media Index']['current_price']}}</td>
+                                <td>{{data['Art and Media Index']['high_24h']}}</td>
+                                <td>{{data['Art and Media Index']['low_24h']}}</td>
+                                <td>{{data['Art and Media Index']['total_volume']}}</td>
+                                <td>{{data['Art and Media Index']['market_cap_change_percentage_24h']}}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Technology Index</th>
+                                <td>{{data['Technology Index']['market_cap']}}</td>
+                                <td>{{data['Technology Index']['current_price']}}</td>
+                                <td>{{data['Technology Index']['high_24h']}}</td>
+                                <td>{{data['Technology Index']['low_24h']}}</td>
+                                <td>{{data['Technology Index']['total_volume']}}</td>
+                                <td>{{data['Technology Index']['market_cap_change_percentage_24h']}}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Supply Chain Index</th>
+                                <td>{{data['Supply Chain Index']['market_cap']}}</td>
+                                <td>{{data['Supply Chain Index']['current_price']}}</td>
+                                <td>{{data['Supply Chain Index']['high_24h']}}</td>
+                                <td>{{data['Supply Chain Index']['low_24h']}}</td>
+                                <td>{{data['Supply Chain Index']['total_volume']}}</td>
+                                <td>{{data['Supply Chain Index']['market_cap_change_percentage_24h']}}</td>
+                            </tr>
+                        </tbody>
 
+                    </table>
+                </div>
+                <div id="historicaldata" class="tab-pane">
+                    <form method="POST" action="{{url_for('visualization')}}">
+                        <div class="form-group">
+                            <label>Index</label>
+                            <select name="industry">
+                                <option>Anti Poverty Index</option>
+                                <option>Sustainability Index</option>
+                                <option>Supply Chain Index</option>
+                                <option>Art and Media Index</option>
+                                <option>Technology Index</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Metric</label>
+                            <select name="metrics">
+                                <option>market_caps</option>
+                                <option>total_volumes</option>
+                                <option>prices</option>
+                            </select>
+                        </div>
+                        <button name="Generate png" type="submit" class="btn btn-primary" name="Generate png">Submit</button>
+                    </form>
+                </div>
+            </div>
 
+        </div>
+
+    </main>
+
+    <script src="index.js"></script>
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </body>
+
 </html>

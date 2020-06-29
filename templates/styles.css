@@ -1,0 +1,17 @@
+body {
+    padding-top: 5rem;
+}
+
+.maincontainer {
+    padding: 3rem 1.5rem;
+    text-align: center;
+    max-width: inherit;
+}
+
+.scroll {
+    overflow-y: auto;
+}
+
+.heading {
+    padding-bottom: 20px;
+}
